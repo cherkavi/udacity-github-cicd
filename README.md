@@ -84,7 +84,7 @@ Next you'll need to configure git to use your desired email.
 
 If you already know what email you'd like to use, great! If you'd like to use the `noreply` email address that Github offers, follow [these instructions](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
 
-**Configure git with your email address**
+~~**Configure git with your email address**~~
 ```bash
 git config --global user.email "YOUR_EMAIL"
 ```

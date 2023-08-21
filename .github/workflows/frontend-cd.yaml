@@ -11,6 +11,7 @@ env:
   ECR_REPO_NAME: 334677819384.dkr.ecr.us-east-1.amazonaws.com/cherkavi-udacity-github-action-fe
   CONTAINER_TAG: '1.0.1'
   API_URL: 'backend_service'
+  AWS_REGION: 'us-east-1'
 
 jobs:
   lint:
@@ -39,9 +40,17 @@ jobs:
       uses: actions/checkout@v3 
     - name: build
       run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend run build
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: ${{ env.AWS_REGION }}
 
-    - name: Set environment variable
-      run: echo "DEST_VERSION=${{ env.NODE_VERSION }}" >> $GITHUB_ENV
+    - name: docker login
+      run: AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | jq -r . ` && docker login -u AWS -p $(aws ecr get-login-password --region ${{ env.AWS_REGION }}) ${AWS_ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          
     - name: 'build docker image'
       uses: 'docker/build-push-action@v2'
       with:
@@ -49,3 +58,4 @@ jobs:
         file: starter/frontend/Dockerfile
         build-args: "REACT_APP_MOVIE_API_URL=${{ env.API_URL }}"
         tags: ${{ env.ECR_REPO_NAME }}:${{ env.CONTAINER_TAG }}
+        push: true

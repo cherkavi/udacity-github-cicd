@@ -10,6 +10,10 @@ echo $AWS_ACCESS_KEY_ID
 echo $AWS_SECRET_ACCESS_KEY
 echo $AWS_SESSION_TOKEN
 
+```
+
+## Due to error in Udacity course - not possible to use predefined terraform script
+```sh
 aws s3 ls
 project
 cd setup/terraform
@@ -41,10 +45,9 @@ aws_repository_name=cherkavi-udacity-github-action-fe
 export ECR_FE_URI=`aws ecr describe-repositories | jq -r '.repositories[] | select(.repositoryName == "'$aws_repository_name'") | .repositoryUri '`
 echo $ECR_FE_URI
 
-sed -i "s|ECR_REPO_NAME: .*|ECR_REPO_NAME: $ECR_FE_URI|g" .github/workflows/workflow-ci-frontend.yaml
-# cat .github/workflows/workflow-ci-frontend.yaml
-sed -i "s|ECR_REPO_NAME: .*|ECR_REPO_NAME: $ECR_FE_URI|g" .github/workflows/workflow-cd-frontend.yaml
-# cat .github/workflows/workflow-cd-frontend.yaml
+project
+sed -i "s|ECR_REPO_NAME: .*|ECR_REPO_NAME: $ECR_FE_URI|g" .github/workflows/frontend-cd.yaml
+# cat .github/workflows/frontend-cd.yaml
 ```
 
 3. create ECR backend manually
@@ -57,6 +60,47 @@ read ECR BE repository
 aws_repository_name=cherkavi-udacity-github-action-be
 export ECR_BE_URI=`aws ecr describe-repositories | jq -r '.repositories[] | select(.repositoryName == "'$aws_repository_name'") | .repositoryUri '`
 echo $ECR_BE_URI
+
+project
+sed -i "s|ECR_REPO_NAME: .*|ECR_REPO_NAME: $ECR_BE_URI|g" .github/workflows/backend-cd.yaml
+# cat .github/workflows/backend-cd.yaml
+```
+
+4. setup secrets for pipelines:
+```sh
+export GITHUB_TOKEN=$GIT_TOKEN_UDACITY
+export GITHUB_PROJECT_ID=`curl https://api.github.com/repos/$GITHUB_USER/$GITHUB_PROJECT | jq .id`
+export GITHUB_PUBLIC_KEY_ID=`curl -X GET -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/$OWNER/$REPO/actions/secrets/public-key" | jq -r .key_id`
+echo $GITHUB_PUBLIC_KEY_ID
+export OWNER=cherkavi
+export REPO=udacity-github-cicd
+
+# echo $AWS_ACCESS_KEY_ID
+export SECRET_NAME=AWS_ACCESS_KEY_ID
+export BASE64_ENCODED_SECRET=`echo -n "$AWS_ACCESS_KEY_ID" | base64`
+curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" \
+  -d '{"encrypted_value":"'$BASE64_ENCODED_SECRET'","key_id":"'$GITHUB_PUBLIC_KEY_ID'"}' \
+  https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
+# curl -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
+
+export SECRET_NAME=AWS_SECRET_ACCESS_KEY
+export BASE64_ENCODED_SECRET=`echo -n "$AWS_SECRET_ACCESS_KEY" | base64`
+curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" \
+  -d '{"encrypted_value":"'$BASE64_ENCODED_SECRET'","key_id":"'$GITHUB_PUBLIC_KEY_ID'"}' \
+  https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
+# curl -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
+
+export SECRET_NAME=AWS_SESSION_TOKEN
+# echo $AWS_SESSION_TOKEN | clipboard
+export BASE64_ENCODED_SECRET=`echo -n "$AWS_SESSION_TOKEN" | base64`
+echo '{"encrypted_value":"'$BASE64_ENCODED_SECRET'","key_id":"'$GITHUB_PUBLIC_KEY_ID'"}' > /tmp/parameter-to-action.json
+cat /tmp/parameter-to-action.json | jq .
+curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.v3+json" \
+    -H "content-type:application/json;charset=UTF-8" \
+    -d "file=@/tmp/parameter-to-action.json" https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
+
+x-www-browser https://github.com/$OWNER/$REPO/settings/secrets/actions
 ```
 
 
