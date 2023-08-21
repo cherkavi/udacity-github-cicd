@@ -48,4 +48,4 @@ jobs:
         context: starter/frontend
         file: starter/frontend/Dockerfile
         build-args: "REACT_APP_MOVIE_API_URL=${{ env.API_URL }}"
-        tags: ${{ ECR_REPO_NAME }}:${{ env.CONTAINER_TAG }}
+        tags: ${{ env.ECR_REPO_NAME }}:${{ env.CONTAINER_TAG }}
