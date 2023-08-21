@@ -83,6 +83,7 @@ curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd
   https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
 # curl -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$OWNER/$REPO/actions/secrets/$SECRET_NAME
 
+# echo $AWS_SECRET_ACCESS_KEY
 export SECRET_NAME=AWS_SECRET_ACCESS_KEY
 export BASE64_ENCODED_SECRET=`echo -n "$AWS_SECRET_ACCESS_KEY" | base64`
 curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" \
@@ -102,7 +103,6 @@ curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" \
 
 x-www-browser https://github.com/$OWNER/$REPO/settings/secrets/actions
 ```
-
 
 
 ## start backend app locally 

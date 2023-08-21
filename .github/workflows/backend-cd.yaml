@@ -1,0 +1,68 @@
+name: backend-cd
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - main
+    paths: 
+      - starter/backend
+
+env:
+  ECR_REPO_NAME: 334677819384.dkr.ecr.us-east-1.amazonaws.com/cherkavi-udacity-github-action-be
+  CONTAINER_TAG: '1.0.1'
+  AWS_REGION: 'us-east-1'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3 
+    - name: install pipenv tool
+      run: |
+        pip install pipenv 
+        pip install flake8
+    - name: pipenv install
+      run: cd starter/backend && pipenv install
+    - name: run test 
+      run: cd starter/backend && pipenv run lint
+
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3 
+    - name: install pipenv tool
+      run: pip install pipenv
+    - name: pipenv install
+      run: cd starter/backend && pipenv install
+    - name: run test 
+      run: cd starter/backend && pipenv run test        
+
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3 
+    - name: install pipenv tool
+      run: pip install pipenv
+    - name: set aws credentials
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set aws_session_token $AWS_SESSION_TOKEN
+    - name: docker login
+      run: AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | jq -r . ` && docker login -u AWS -p $(aws ecr get-login-password --region ${{ env.AWS_REGION }}) ${AWS_ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com          
+    - name: 'build docker image'
+      uses: 'docker/build-push-action@v2'
+      with:
+        context: starter/backend
+        file: starter/backend/Dockerfile
+        tags: ${{ env.ECR_REPO_NAME }}:${{ env.CONTAINER_TAG }}
+        push: true

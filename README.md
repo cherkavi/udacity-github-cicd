@@ -56,11 +56,11 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
 **⚠️ NOTE**
 Once you begin work on Continuous Deployment, you'll need to first setup the AWS and Kubernetes environment. Follow [these instructions ](#setting-up-continuous-deployment-environment) only when you're ready to start testing your deployments.
 
-~~## One-time setup instructions~~
+## ~~One-time setup instructions~~
 
 The project assumes you'll be working in the Udacity workspace where all the necessary system dependencies are installed and setup, ready for use.
 The following steps are required to be run only once to initialize and create your repository with all the files that you'll use for the project.
-~~### Login~~
+### ~~Login~~
 Launch the Udacity workspace and open the terminal in VSCode to start executing the following commands:
 1. Start the login process with `gh`
 ```bash
@@ -79,7 +79,7 @@ gh auth login
    10. Click authorize to allow the Github CLI to access your repository information.
    11. You can close the Github window and go back to the Udacity workspace tab
 
-~~### Configuration~~
+### ~~Configuration~~
 Next you'll need to configure git to use your desired email.
 
 If you already know what email you'd like to use, great! If you'd like to use the `noreply` email address that Github offers, follow [these instructions](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
@@ -165,7 +165,7 @@ cd setup
 
 2. The script will download a tool, add the IAM user ARN to the authentication configuration, indicate a `Done` status, then it'll remove the tool
 
-~~## Dependencies~~
+## ~~Dependencies~~
 We've provided the below list of dependencies to assist in the case you'd like to run any of the work locally. 
 Local development issues, however, are not supported as we cannot control 
 the environment as we can in the online workspace.
@@ -181,7 +181,7 @@ All of the tools below will be available in the workspace
 
 ## Frontend Development notes
 
-~~### Running tests~~
+### ~~Running tests~~
 While in the frontend directory, perform the following steps:
 ```bash
 # Use correct NodeJS version
@@ -208,13 +208,13 @@ Time:        1.33 s
 Ran all test suites.
 ```
 
-To simulate a failure in the test coverage, which will be needed to ensure your CI/CD pipeline fails on bad tests, set the MOVIE_HEADING variable before the command like so:
+~~To simulate a failure in the test coverage, which will be needed to ensure your CI/CD pipeline fails on bad tests, set the MOVIE_HEADING variable before the command like so:~~
 
 ```bash
 FAIL_TEST=true CI=true npm test
 ```
 
-As the test is expecting the heading to contain a certain value, we can simulate a failure by changing it with an inline or environment variable. If you use the environment variable, make sure to unset it when you're done testing
+~~As the test is expecting the heading to contain a certain value, we can simulate a failure by changing it with an inline or environment variable. If you use the environment variable, make sure to unset it when you're done testing~~
 ```bash
 # Expect tests to fail with this set to anything except Movie List
 export FAIL_TEST=true
@@ -261,7 +261,7 @@ FAIL src/components/__tests__/App.test.js
 PASS src/components/__tests__/MovieList.test.js
 ```
 
-~~### Running linter~~
+### ~~Running linter~~
 ~~When there are no linting errors, the output won't return any errors~~
 ```bash
 npm run lint
@@ -286,7 +286,7 @@ FAIL_LINT=true npm run lint
 ✖ 2 problems (2 errors, 0 warnings)
 ```
 
-~~### Build and run~~
+### ~~Build and run~~
 ~~For local development without docker, the developers use the following commands:~~
 ```bash
 cd starter/frontend
@@ -327,11 +327,11 @@ kustomize edit set image frontend=<ECR_REPO_URL>:<NEW_TAG_HERE>
 kustomize build | kubectl apply -f -
 ```
 
-## Backend Development notes
+## ~~Backend Development notes~~
 
-~~### Running tests~~
+### ~~Running tests~~
 
-While in the backend directory, perform the following steps:
+~~While in the backend directory, perform the following steps:~~
 
 ```bash
 # Install dependencies
@@ -385,7 +385,7 @@ FAILED test_app.py::test_movies_endpoint_returns_200 - AssertionError: assert 20
 ================================================================ 1 failed, 2 passed in 0.11s ================================================================
 ```
 
-### Running linter
+### ~~Running linter~~
 
 When there are no linting errors, there won't be any output.
 
