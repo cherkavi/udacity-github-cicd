@@ -14,8 +14,9 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
 ### Frontend
 
 1. A Continuous Integration workflow that:
-   1. Runs on `pull_requests` against the `main` branch,only when code in the frontend application changes.
-   2. Is able to be run on-demand (i.e. manually without needing to push code)
+   1. ~~Runs on `pull_requests` against the `main` branch,~~
+      ~~only when code in the frontend application changes.~~
+   2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
    3. Runs the following jobs in parallel:
       1. Runs a linting job that fails if the code doesn't adhere to eslint rules
       2. Runs a test job that fails if the test suite doesn't pass
@@ -53,11 +54,11 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
 **⚠️ NOTE**
 Once you begin work on Continuous Deployment, you'll need to first setup the AWS and Kubernetes environment. Follow [these instructions ](#setting-up-continuous-deployment-environment) only when you're ready to start testing your deployments.
 
-## One-time setup instructions
+~~## One-time setup instructions~~
 
 The project assumes you'll be working in the Udacity workspace where all the necessary system dependencies are installed and setup, ready for use.
 The following steps are required to be run only once to initialize and create your repository with all the files that you'll use for the project.
-### Login
+~~### Login~~
 Launch the Udacity workspace and open the terminal in VSCode to start executing the following commands:
 1. Start the login process with `gh`
 ```bash
@@ -76,7 +77,7 @@ gh auth login
    10. Click authorize to allow the Github CLI to access your repository information.
    11. You can close the Github window and go back to the Udacity workspace tab
 
-### Configuration
+~~### Configuration~~
 Next you'll need to configure git to use your desired email.
 
 If you already know what email you'd like to use, great! If you'd like to use the `noreply` email address that Github offers, follow [these instructions](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
@@ -88,32 +89,36 @@ git config --global user.email "YOUR_EMAIL"
    
 Now we'll finish up by initializing the repository and using the `gh` command to push the files to a new repository under you Github account. The last command uses `udacity-build-cicd-project` as the repository name, but you can change this to be whatever you'd like that doesn't conflict with an existing repo name in your account.
 
-**Initialize the workspace as a git repository**
+~~**Initialize the workspace as a git repository**~~
 ```bash
 git init
 ```
    
-**Stage the workspace files for committing**
+~~**Stage the workspace files for committing**~~
 ```bash
 git add .
 ```
    
-**Commit the workspace files**
+~~**Commit the workspace files**~~
 ```bash
 git commit -m "initial"
 ```
    
-**Create your public repository and push the initial changes (it needs to be public to allow Github Actions to run for free)**
+~~**Create your public repository and push the initial changes (it needs to be public to allow Github Actions to run for free)**~~
 ```bash
 gh repo create udacity-build-cicd-project --source=. --public --push
 ```
-
-As you work on the project, you won't need to create or initialize the repo again. You'll just need to make changes to your workflows in the `.github/workflows` folder, and perform `git add .` `git commit` and `git push` commands to make the files available in your repository and view your actions in the Github Actions interface.
+As you work on the project, you won't need to create or initialize the repo again. 
+You'll just need to make changes to your workflows in the `.github/workflows` folder, 
+and perform `git add .` `git commit` and `git push` commands to make the files available 
+in your repository and view your actions in the Github Actions interface.
 
 
 ## Setting up Continuous Deployment environment
-
-Only complete these steps once you've finished your Continuous Integration pipelines for the frontend and backend applications. This section is meant to create a Kubernetes environment for you to deploy the applications to and verify the deployment step.
+Only complete these steps once you've finished your Continuous Integration pipelines 
+for the frontend and backend applications. 
+This section is meant to create a Kubernetes environment for you 
+to deploy the applications to and verify the deployment step.
 
 First we need to prep the AWS account with the necessary infrastructure for deploying the frontend and backend applications. As the focus of this course is building the CI/CD pipelines, we won't be requiring you to setup all of the underlying AWS and Kubernetes infrastructure. This will be done for you with the provided Terraform and helper scripts. As there are costs associated with running this infrastucture, **REMEMBER** to destroy everything before stopping work. Everything can be recreated, and the pipeline work you'll be doing is all saved in this repository.
 
@@ -158,10 +163,10 @@ cd setup
 
 2. The script will download a tool, add the IAM user ARN to the authentication configuration, indicate a `Done` status, then it'll remove the tool
 
-## Dependencies
-
-We've provided the below list of dependencies to assist in the case you'd like to run any of the work locally. Local development issues, however, are not supported as we cannot control the environment as we can in the online workspace.
-
+~~## Dependencies~~
+We've provided the below list of dependencies to assist in the case you'd like to run any of the work locally. 
+Local development issues, however, are not supported as we cannot control 
+the environment as we can in the online workspace.
 All of the tools below will be available in the workspace
 
 * [docker](https://docs.docker.com/desktop/install/debian/) - Used to build the frontend and backend applications
@@ -174,10 +179,8 @@ All of the tools below will be available in the workspace
 
 ## Frontend Development notes
 
-### Running tests
-
+~~### Running tests~~
 While in the frontend directory, perform the following steps:
-
 ```bash
 # Use correct NodeJS version
 nvm use
@@ -210,7 +213,6 @@ FAIL_TEST=true CI=true npm test
 ```
 
 As the test is expecting the heading to contain a certain value, we can simulate a failure by changing it with an inline or environment variable. If you use the environment variable, make sure to unset it when you're done testing
-
 ```bash
 # Expect tests to fail with this set to anything except Movie List
 export FAIL_TEST=true
@@ -257,20 +259,16 @@ FAIL src/components/__tests__/App.test.js
 PASS src/components/__tests__/MovieList.test.js
 ```
 
-### Running linter
-
-When there are no linting errors, the output won't return any errors
-
+~~### Running linter~~
+~~When there are no linting errors, the output won't return any errors~~
 ```bash
 npm run lint
-
 # Expected output
 > frontend@1.0.0 lint
 > eslint .
 ```
 
-To simulate linting errors, you can run the linting command like so:
-
+~~To simulate linting errors, you can run the linting command like so:~~
 ```bash
 FAIL_LINT=true npm run lint
 
@@ -286,10 +284,8 @@ FAIL_LINT=true npm run lint
 ✖ 2 problems (2 errors, 0 warnings)
 ```
 
-### Build and run
-
-For local development without docker, the developers use the following commands:
-
+~~### Build and run~~
+~~For local development without docker, the developers use the following commands:~~
 ```bash
 cd starter/frontend
 
@@ -300,22 +296,20 @@ npm ci
 REACT_APP_MOVIE_API_URL=http://localhost:5000 npm start
 ```
 
-To build the frontend application for a production deployment, they use the following commands:
-
+~~To build the frontend application for a production deployment, they use the following commands:~~
 ```bash
 # Build the image
 # NOTE: Make sure the image is built with the URL of the backend system.
 # The URL below would be the default backend URL when running locally
 docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag=mp-frontend:latest .
 
-docker run --name mp-frontend -p 3000:3000 -d mp-frontend]
+docker run --name mp-frontend -p 3000:3000 -d mp-frontend
 
 # Open the browser to localhost:3000 and you should see the list of movies,
 # provided the backend is already running and available on localhost:5000
 ```
 
 ### Deploy Kubernetes manifests
-
 In order to build the Kubernetes manifests correctly, the team uses `kustomize` in the following way:
 
 ```bash
@@ -333,7 +327,7 @@ kustomize build | kubectl apply -f -
 
 ## Backend Development notes
 
-### Running tests
+~~### Running tests~~
 
 While in the backend directory, perform the following steps:
 
@@ -356,7 +350,7 @@ test_app.py::test_movies_endpoint_returns_json PASSED                           
 test_app.py::test_movies_endpoint_returns_valid_data PASSED                                                                                       [100%]
 ```
 
-To simulate failing the backend tests, run the following command:
+~~To simulate failing the backend tests, run the following command:~~
 
 ```bash
 FAIL_TEST=true pipenv run test
@@ -413,8 +407,7 @@ pipenv run lint-fail
 
 ### Build and run
 
-For local development without docker, the developers use the following commands to build and run the backend application:
-
+~~For local development without docker, the developers use the following commands to build and run the backend application:~~
 ```bash
 cd starter/backend
 
@@ -425,8 +418,7 @@ pipenv install
 pipenv run serve
 ```
 
-For production deployments, the team uses the following commands to build and run the Docker image.
-
+~~For production deployments, the team uses the following commands to build and run the Docker image.~~
 ```bash
 cd starter/backend
 
