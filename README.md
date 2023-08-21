@@ -20,7 +20,7 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
    3. ~~Runs the following jobs in parallel:~~
       ~~1. Runs a linting job that fails if the code doesn't adhere to eslint rules~~
       ~~2. Runs a test job that fails if the test suite doesn't pass~~
-   4. ~~Runs a build job only if the lint and test jobs pass and successfully builds the application~~
+   4. Runs a build job only if the lint and test jobs pass and successfully builds the application~~
 2. A Continuous Deployment workflow that:~~
    1. ~~Runs on `push` against the `main` branch,~~
       ~~only when code in the frontend application changes.~~
@@ -35,18 +35,18 @@ You'll find 2 folders, one named `frontend` and one named `backend`, where each 
 ### Backend
 
 1. A Continuous Integration workflow that:
-   1. Runs on `pull_requests` against the `main` branch,only when code in the frontend application changes.~~
-   2. Is able to be run on-demand (i.e. manually without needing to push code)~~
-   3. Runs the following jobs in parallel:~~
-      1. Runs a linting job that fails if the code doesn't adhere to eslint rules~~
-      2. Runs a test job that fails if the test suite doesn't pass~~
+   1. ~~Runs on `pull_requests` against the `main` branch,only when code in the frontend application changes.~~
+   2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
+   3. ~~Runs the following jobs in parallel:~~
+      1. ~~Runs a linting job that fails if the code doesn't adhere to eslint rules~~
+      2. ~~Runs a test job that fails if the test suite doesn't pass~~
    4. Runs a build job only if the lint and test jobs pass and successfully builds the application~~
 2. A Continuous Deployment workflow that:
-   1. Runs on `push` against the `main` branch, ~~
-      only when code in the frontend application changes.~~
-   2. Is able to be run on-demand (i.e. manually without needing to push code)~~
-   3. Runs the same lint/test jobs as the Continuous Integration workflow~~
-   4. Runs a build job only when the lint and test jobs pass~~
+   1. ~~Runs on `push` against the `main` branch,~~
+      ~~only when code in the frontend application changes.~~
+   2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
+   3. ~~Runs the same lint/test jobs as the Continuous Integration workflow~~
+   4. ~~Runs a build job only when the lint and test jobs pass~~
       1. The built docker image should be tagged with the git sha
    5. Runs a deploy job that applies the Kubernetes manifests to the provided cluster.
       1. The manifest should deploy the newly created tagged image

@@ -1,9 +1,11 @@
-name: backend-ci
+name: backend-cd
 on:
-  pull_request:
-    branches: [main]
-    paths: [starter/backend]
   workflow_dispatch:
+  push:
+    branches: 
+      - main
+    paths: 
+      - starter/backend
 
 jobs:
   lint:
