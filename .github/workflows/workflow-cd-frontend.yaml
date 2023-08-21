@@ -1,9 +1,11 @@
 name: frontend-ci
 on:
-  pull_request:
-    branches: [main]
-    paths: [starter/frontend]
   workflow_dispatch:
+  push:
+    branches: 
+      - main
+    paths: 
+      - starter/frontend
 
 jobs:
   lint:
