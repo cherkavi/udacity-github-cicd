@@ -16,7 +16,8 @@ RUN apk update && \
 
 RUN mkdir -p /var/www/app && mkdir /app
 
-COPY Pipfile* /app
+COPY Pipfile /app
+COPY Pipfile.lock /app # docker.host run of `pipenv install` is necessary 
 RUN cd /app && pipenv install --system --deploy
 
 COPY . /app
