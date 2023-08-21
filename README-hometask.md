@@ -183,8 +183,3 @@ docker run --name mp-frontend -p 3000:3000 -d mp-frontend
 x-www-browser 127.0.0.1:3000
 docker stop mp-frontend
 ```
-
-## github actions
-```sh
-
-```
