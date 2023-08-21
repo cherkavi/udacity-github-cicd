@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: 
-      - master
+      - main
 
 jobs:
   lint:
@@ -34,4 +34,4 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3 
     - name: build
-      run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend build
+      run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend run build
