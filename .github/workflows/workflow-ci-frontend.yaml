@@ -1,11 +1,9 @@
-name: 'Frontend: Continuous Integration'
+name: frontend-ci
 on:
   pull_request:
     branches: [main]
     paths: [starter/frontend]
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
   push:
     branches: 
       - master
