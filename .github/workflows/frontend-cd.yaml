@@ -40,17 +40,12 @@ jobs:
       uses: actions/checkout@v3 
     - name: build
       run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend run build
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-region: ${{ env.AWS_REGION }}
-
     - name: docker login
-      run: AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | jq -r . ` && docker login -u AWS -p $(aws ecr get-login-password --region ${{ env.AWS_REGION }}) ${AWS_ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-          
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      run: AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | jq -r . ` && docker login -u AWS -p $(aws ecr get-login-password --region ${{ env.AWS_REGION }}) ${AWS_ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com          
     - name: 'build docker image'
       uses: 'docker/build-push-action@v2'
       with:
