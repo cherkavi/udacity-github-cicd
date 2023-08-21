@@ -5,6 +5,10 @@ on:
     paths: [starter/frontend]
   workflow_dispatch:
 
+env:
+  ECR_REPO_NAME: 334677819384.dkr.ecr.us-east-1.amazonaws.com/cherkavi-udacity-github-action-fe
+  CONTAINER_TAG: '1.0.1'
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -30,5 +34,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3 
-    - name: build
+    - name: build src
       run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend run build
+    - name: 'build docker image'
+      uses: 'docker/build-push-action@v2'
+      with:
+        context: starter/frontend
+        file: starter/frontend/Dockerfile
+        tags: ${{ ECR_REPO_NAME }}:${{ env.CONTAINER_TAG }}
