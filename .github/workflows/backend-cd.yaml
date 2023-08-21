@@ -51,6 +51,8 @@ jobs:
       uses: actions/checkout@v3 
     - name: install pipenv tool
       run: pip install pipenv
+    - name: pipenv install
+      run: cd starter/backend && pipenv install
     - name: set aws credentials
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
