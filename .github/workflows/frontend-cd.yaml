@@ -9,8 +9,8 @@ on:
 
 env:
   ECR_REPO_NAME: 334677819384.dkr.ecr.us-east-1.amazonaws.com/cherkavi-udacity-github-action-fe
-  CONTAINER_TAG: '1.0.1'
-  API_URL: 'backend_service'
+  CONTAINER_TAG: '1.0.2'
+  API_URL: 'http://backend'
   AWS_REGION: 'us-east-1'
 
 jobs:

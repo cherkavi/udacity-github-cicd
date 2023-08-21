@@ -9,48 +9,48 @@ The team's project is comprised of 2 applications.
 
 You'll find 2 folders, one named `frontend` and one named `backend`, where each application's source code is maintained. Your job is to use the team's [existing documentation](#frontend-development-notes) and create CI/CD pipelines to meet the teams' needs.
 
-## Deliverables
+## ~~Deliverables~~
 
-### Frontend
+### ~~Frontend~~
 
-1. A Continuous Integration workflow that:
+1. ~~A Continuous Integration workflow that:~~
    1. ~~Runs on `pull_requests` against the `main` branch,~~
       ~~only when code in the frontend application changes.~~
    2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
    3. ~~Runs the following jobs in parallel:~~
       ~~1. Runs a linting job that fails if the code doesn't adhere to eslint rules~~
       ~~2. Runs a test job that fails if the test suite doesn't pass~~
-   4. Runs a build job only if the lint and test jobs pass and successfully builds the application~~
-2. A Continuous Deployment workflow that:~~
+   4. ~~Runs a build job only if the lint and test jobs pass and successfully builds the application~~
+2. ~~A Continuous Deployment workflow that:~~
    1. ~~Runs on `push` against the `main` branch,~~
       ~~only when code in the frontend application changes.~~
    2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
    3. ~~Runs the same lint/test jobs as the Continuous Integration workflow~~
    4. ~~Runs a build job only when the lint and test jobs pass~~
-      1. The built docker image should be tagged with the git sha~~
-   5. Runs a deploy job that applies the Kubernetes manifests to the provided cluster.~~
-      1. The manifest should deploy the newly created tagged image~~
-      2. The tag applied to the image should be the git SHA of the commit that triggered the build~~
+      1. ~~The built docker image should be tagged with the git sha~~
+   5. ~~Runs a deploy job that applies the Kubernetes manifests to the provided cluster.~~
+      1. ~~The manifest should deploy the newly created tagged image~~
+      2. ~~The tag applied to the image should be the git SHA of the commit that triggered the build~~
 
-### Backend
+### ~~Backend~~
 
-1. A Continuous Integration workflow that:
+1. ~~A Continuous Integration workflow that:~~
    1. ~~Runs on `pull_requests` against the `main` branch,only when code in the frontend application changes.~~
    2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
    3. ~~Runs the following jobs in parallel:~~
       1. ~~Runs a linting job that fails if the code doesn't adhere to eslint rules~~
       2. ~~Runs a test job that fails if the test suite doesn't pass~~
-   4. Runs a build job only if the lint and test jobs pass and successfully builds the application~~
-2. A Continuous Deployment workflow that:
+   4. ~~Runs a build job only if the lint and test jobs pass and successfully builds the application~~
+2. ~~A Continuous Deployment workflow that:~~
    1. ~~Runs on `push` against the `main` branch,~~
       ~~only when code in the frontend application changes.~~
    2. ~~Is able to be run on-demand (i.e. manually without needing to push code)~~
    3. ~~Runs the same lint/test jobs as the Continuous Integration workflow~~
    4. ~~Runs a build job only when the lint and test jobs pass~~
-      1. The built docker image should be tagged with the git sha
-   5. Runs a deploy job that applies the Kubernetes manifests to the provided cluster.
-      1. The manifest should deploy the newly created tagged image
-      2. The tag applied to the image should be the git SHA of the commit that triggered the build
+      1. ~~The built docker image should be tagged with the git sha~~
+   5. ~~Runs a deploy job that applies the Kubernetes manifests to the provided cluster.~~
+      1. ~~The manifest should deploy the newly created tagged image~~
+      2. ~~The tag applied to the image should be the git SHA of the commit that triggered the build~~
 
 
 **⚠️ NOTE**
@@ -116,7 +116,7 @@ and perform `git add .` `git commit` and `git push` commands to make the files a
 in your repository and view your actions in the Github Actions interface.
 
 
-## Setting up Continuous Deployment environment
+## ~~Setting up Continuous Deployment environment~~
 Only complete these steps once you've finished your Continuous Integration pipelines 
 for the frontend and backend applications. 
 This section is meant to create a Kubernetes environment for you 
@@ -124,7 +124,7 @@ to deploy the applications to and verify the deployment step.
 
 First we need to prep the AWS account with the necessary infrastructure for deploying the frontend and backend applications. As the focus of this course is building the CI/CD pipelines, we won't be requiring you to setup all of the underlying AWS and Kubernetes infrastructure. This will be done for you with the provided Terraform and helper scripts. As there are costs associated with running this infrastucture, **REMEMBER** to destroy everything before stopping work. Everything can be recreated, and the pipeline work you'll be doing is all saved in this repository.
 
-### Create AWS infrastructure with Terraform
+### ~~Create AWS infrastructure with Terraform~~
 
 1. Export your AWS credentials from the Cloud Gateway
 2. Use the commands below to run the Terraform and type `yes` after reviewing the expected changes
@@ -135,7 +135,7 @@ terraform apply
 ```
 
 4. Take note of the Terraform outputs. You'll need these later as you work on the project. You can always retrieve these values later with this command
-
+> not possible - lack of access for provided AWS User
 ```bash
 cd setup/terraform
 terraform output
@@ -179,7 +179,7 @@ All of the tools below will be available in the workspace
 * [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) Used for building the Kubernetes manifests dynamically in the CI environment
 * [jq](https://stedolan.github.io/jq/download/) for parsing JSON more easily on the command line
 
-## Frontend Development notes
+## ~~Frontend Development notes~~
 
 ### ~~Running tests~~
 While in the frontend directory, perform the following steps:
@@ -311,7 +311,8 @@ docker run --name mp-frontend -p 3000:3000 -d mp-frontend
 # provided the backend is already running and available on localhost:5000
 ```
 
-### Deploy Kubernetes manifests
+### ~~Deploy Kubernetes manifests~~
+> duplication in README.md - should be removed from original
 In order to build the Kubernetes manifests correctly, the team uses `kustomize` in the following way:
 
 ```bash
@@ -407,7 +408,7 @@ pipenv run lint-fail
 ./movies/resources.py:16:89: E501 line too long (117 > 88 characters)
 ```
 
-### Build and run
+### ~~Build and run~~
 
 ~~For local development without docker, the developers use the following commands to build and run the backend application:~~
 ```bash
