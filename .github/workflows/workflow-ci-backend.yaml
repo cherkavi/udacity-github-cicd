@@ -16,7 +16,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3 
     - name: install pipenv tool
-      run: pip install pipenv
+      run: |
+        pip install pipenv 
+        pip install flake8
     - name: pipenv install
       run: cd starter/backend && pipenv install
     - name: run test 
