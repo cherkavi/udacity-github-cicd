@@ -33,5 +33,5 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3 
-    - name: lint
+    - name: build
       run: npm --prefix starter/frontend install && CI=true npm --prefix starter/frontend build

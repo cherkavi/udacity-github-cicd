@@ -77,3 +77,8 @@ docker run --name mp-frontend -p 3000:3000 -d mp-frontend
 x-www-browser 127.0.0.1:3000
 docker stop mp-frontend
 ```
+
+## github actions
+```sh
+x-www-browser https://github.com/cherkavi/udacity-github-cicd/actions/workflows/workflow-ci-frontend.yaml
+```
