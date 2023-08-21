@@ -13,6 +13,7 @@ echo $AWS_SESSION_TOKEN
 ```
 
 ## Due to error in Udacity course - not possible to use predefined terraform script
+https://knowledge.udacity.com/questions/1003797 - in progress
 ```sh
 aws s3 ls
 project
